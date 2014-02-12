@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'data_mapper'
+require 'json'
 
 configure do
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/soundRouter.db")
@@ -15,14 +16,13 @@ configure do
   
   # automatically migrate database if needed
   DataMapper.auto_migrate!
- 
-  # lets add some records to start with
-  if Connection.count == 0
-    Connection.create(:input => 'dragon', :output => 'kitchen', :connected => true)
-  end
 end
-
 
 get '/' do
   "Hello"
+end
+
+post '/connection' do
+	body = JSON.parse(request.body.read)
+	Connection.first(:input => body["input"],:output => body["output"]).update(:connected => body["connected"])
 end
