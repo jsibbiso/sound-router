@@ -26,3 +26,10 @@ post '/connection' do
 	body = JSON.parse(request.body.read)
 	Connection.first(:input => body["input"],:output => body["output"]).update(:connected => body["connected"])
 end
+
+post '/mute' do
+	body = JSON.parse(request.body.read)
+	outputs = {}
+	outputs = {:output => body["output"]} if body["output"]
+	Connection.all(outputs).update(:connected => false)
+end
