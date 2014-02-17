@@ -1,5 +1,6 @@
 .grid div {
 	margin: 1em 0;
+	display: none;
 }
 .grid a {
 	padding: 4px 8px;
