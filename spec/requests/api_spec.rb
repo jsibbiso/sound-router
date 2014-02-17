@@ -3,9 +3,9 @@ require 'spec_helper'
 describe "API Spec" do
 	
 	describe "GET home" do
-		it "return Hello" do
+		it "should load" do
 			get '/'
-			(last_response.body).should eq("Hello")
+			last_response.status.should eq(200)
 		end
 	end
 
@@ -60,6 +60,29 @@ describe "API Spec" do
 			Connection.first(:output => "dragon").connected.should be_false
 			Connection.first(:output => "kitchen").connected.should be_false
 			Connection.count.should eql(2)
+		end
+	end
+
+	describe "Reset" do
+		before(:each) do
+			Connection.destroy
+			Connection.create(:input => 'a', :output => 'b', :connected => true)
+			Connection.create(:input => 'b', :output => 'b', :connected => false)
+			Connection.create(:input => 'b', :output => 'a', :connected => true)
+			Connection.create(:input => 'a', :output => 'a', :connected => true)
+		end
+		it 'should remove everything and set it to a clean one-to-one state' do
+			post '/reset', {}.to_json
+
+			last_response.status.should eq(200)
+
+			connections = Connection.all
+			connections.each do |connection|
+				connection.connected.should be_true if connection.output == connection.input
+				connection.connected.should be_false unless connection.output == connection.input
+			end
+			
+			connections.count.should eql(16) #We are doing a 4x4 grid
 		end
 	end
 

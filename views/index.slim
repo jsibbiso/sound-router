@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title Sound Router
+
+  body
+    h1 Sound Router
+  	ul
+  	- @connections.each do |item|
+  		- if item.connected 
+  			li = "#{item.input} connected to #{item.output}"

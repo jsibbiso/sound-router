@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'data_mapper'
 require 'json'
+require 'slim'
 
 configure do
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/soundRouter.db")
@@ -19,7 +20,30 @@ configure do
 end
 
 get '/' do
-  "Hello"
+	@connections = Connection.all
+  slim :index
+end
+
+post '/reset' do
+	Connection.destroy
+	Connection.create(:input => 'a', :output => 'a', :connected => true)
+	Connection.create(:input => 'a', :output => 'b', :connected => false)
+	Connection.create(:input => 'a', :output => 'c', :connected => false)
+	Connection.create(:input => 'a', :output => 'd', :connected => false)
+	Connection.create(:input => 'b', :output => 'a', :connected => false)
+	Connection.create(:input => 'b', :output => 'b', :connected => true)
+	Connection.create(:input => 'b', :output => 'c', :connected => false)
+	Connection.create(:input => 'b', :output => 'd', :connected => false)
+	Connection.create(:input => 'c', :output => 'a', :connected => false)
+	Connection.create(:input => 'c', :output => 'b', :connected => false)
+	Connection.create(:input => 'c', :output => 'c', :connected => true)
+	Connection.create(:input => 'c', :output => 'd', :connected => false)
+	Connection.create(:input => 'd', :output => 'a', :connected => false)
+	Connection.create(:input => 'd', :output => 'b', :connected => false)
+	Connection.create(:input => 'd', :output => 'c', :connected => false)
+	Connection.create(:input => 'd', :output => 'd', :connected => true)
+
+	true
 end
 
 post '/connection' do

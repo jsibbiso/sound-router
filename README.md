@@ -8,4 +8,4 @@ Designed to be run on rasberry pi hardware
 
 No bundler as bundler will probably chew too much memory... untested
 
-Runs on sqlite3 and ruby 2.0.0
+Runs on sqlite3 and ruby 1.9.3

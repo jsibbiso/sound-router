@@ -4,6 +4,7 @@ gem 'json'
 gem 'thin'
 gem 'datamapper'
 gem 'dm-sqlite-adapter'
+gem 'slim'
 
 group :development, :test do
 	gem 'rspec'
