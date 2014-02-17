@@ -20,7 +20,7 @@ configure do
 end
 
 get '/' do
-	@connections = Connection.all
+	@connections = Connection.all(:order => [:input.asc, :output.asc])
   slim :index
 end
 

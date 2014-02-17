@@ -2,10 +2,31 @@ doctype html
 html
   head
     title Sound Router
+    link rel="stylesheet" type="text/css" href="./../style/style.css"
 
   body
     h1 Sound Router
-  	ul
+  	
+  	- conn_hash = {}
+  	- @connections.each do |item|
+  		- conn_hash[item.input] = {} unless conn_hash[item.input]
+  		- conn_hash[item.input][item.output] = item.connected
+
+  	- conn_hash.each do |input, collection|
+  		div.grid id="#{input}_grid"
+  			h4 = "Input #{input}" 
+  			- collection.each do |output, connected|
+  				div
+  					= "Output #{output}"
+  					a class="#{connected ? 'active' : 'deactivated'}" data-input="#{input}" data-output="#{output}" Connected
+  					a class="#{!connected ? 'active' : 'deactivated'}" data-input="#{input}" data-output="#{output}" Disconnected
+
+
+
+
+  	ul#all
   	- @connections.each do |item|
   		- if item.connected 
   			li = "#{item.input} connected to #{item.output}"
+
+  	script src="http://code.jquery.com/jquery-1.10.2.min.js"
