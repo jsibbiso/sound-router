@@ -1,7 +1,8 @@
 $(document).ready(function() {
-	$(".grid h4").click(function(e) {
+	$(".index h4").click(function(e) {
 		$(".grid div").slideUp();
-		$(this).siblings("div").slideDown();
+		var target_parent_id = '#' + $(this).parent().attr('id').split('_')[0] + '_grid';
+		$(target_parent_id).children("div").slideDown();
 	});
 
 	$("a.connect").click(function(e) {

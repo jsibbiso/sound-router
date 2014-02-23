@@ -12,9 +12,15 @@ html
   		- conn_hash[item.input] = {} unless conn_hash[item.input]
   		- conn_hash[item.input][item.output] = item.connected
 
+  	div#index
+	  	- conn_hash.each do |input, collection|
+	  		span.index id="#{input}_index"
+	  			h4 = "#{input}"
+
+		div.clear
+
   	- conn_hash.each do |input, collection|
   		div.grid id="#{input}_grid"
-  			h4 = "Input #{input}" 
   			- collection.each do |output, connected|
   				div
   					= "Output #{output}"

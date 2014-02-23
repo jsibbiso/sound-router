@@ -1,3 +1,13 @@
+div#index {
+}
+div.clear {
+		clear: both;
+}
+span.index {
+	width: 2em;
+	float: left;
+} 
+
 .grid div {
 	margin: 1em 0;
 	display: none;
